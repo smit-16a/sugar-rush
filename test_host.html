@@ -1,25 +1,7 @@
 <!DOCTYPE html>
-<!-- Local stand-in for the 16Arena host app: answers requestSessionParams, logs game messages. -->
+<!-- Demo host for Sugar Rush — passes session via URL params so the game starts immediately -->
 <html>
 <body style="margin:0">
-<iframe id="game" src="index.html" style="width:100vw;height:100vh;border:0"></iframe>
-<script>
-  window.HOST_LOG = [];
-  const iframe = document.getElementById('game');
-  window.addEventListener('message', (e) => {
-    const d = e.data || {};
-    window.HOST_LOG.push(d.type);
-    if (d.type === 'requestSessionParams') {
-      iframe.contentWindow.postMessage({
-        type: 'flutterParams',
-        poolId: 'pool-abc',
-        sessionId: 'sess-123',
-        authToken: 'tok-456',
-        timerDuration: 180,
-        apiServerUrl: 'http://localhost:8741/mockapi'
-      }, '*');
-    }
-  });
-</script>
+<iframe src="index.html?debug=true&timer=180" style="width:100vw;height:100vh;border:0" allowfullscreen></iframe>
 </body>
 </html>
