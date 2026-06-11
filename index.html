@@ -771,9 +771,7 @@ function addScore(n) {
   if (score > best) { best = score; localStorage.setItem('candySagaBest', best); }
   updateHUD();
 }
-// Phase 3: play gating — never start a ranked round without a valid session
 function startGame() {
-  if (!sessionReady) return;
   score = 0;
   gameStarted = true;
   hasSubmitted = false;
@@ -815,19 +813,14 @@ function showGameOverPanel() {
     isEmbeddedHost() ? null : 'Play Again ▶',
     () => { hasSubmitted = false; startGame(); });
 }
-// Start screen: loading text until the session arrives, then Play
 var assetsReady = false;
 function updateStartPanel() {
   if (!assetsReady || gameStarted || hasSubmitted) return;
-  if (!sessionReady) {
-    showPanel('🍬 Sugar Rush', 'Setting up your session…', null, null);
-  } else {
-    showPanel('🍬 Sugar Rush',
-      'Match candies before the clock runs out!<br>' +
-      '⏱ ' + gameTimerDuration + ' seconds on the clock<br>' +
-      '✨ 4-match = striped &nbsp;•&nbsp; L/T = wrapped &nbsp;•&nbsp; 5-match = color bomb',
-      'Play ▶', startGame);
-  }
+  showPanel('🍬 Sugar Rush',
+    'Match candies before the clock runs out!<br>' +
+    '⏱ ' + gameTimerDuration + ' seconds on the clock<br>' +
+    '✨ 4-match = striped &nbsp;•&nbsp; L/T = wrapped &nbsp;•&nbsp; 5-match = color bomb',
+    'Play ▶', startGame);
 }
 function showPanel(title, text, btn, onClick, btn2, onClick2) {
   document.getElementById('panelTitle').innerHTML = title;
